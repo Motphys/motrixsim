@@ -1,33 +1,52 @@
 <mujoco>
-  <option timestep="0.01"/>
-  <include file="./common/materials.xml"/>
+  <include file="./common/flat_ground.xml" />
+  <compiler />
+  <option timestep="0.01" />
+  <visual>
+    <quality shadowsize="4096" />
+    <global _disable_near_clip="true" />
+    <headlight diffuse="0.0 0.0 0.0" ambient="0.0 0.0 0.0" specular="0 0 0" />
+    <map zfar="1000" />
+    <tonemapping method="aces" />
+    <ssgi active="true" resolutionscale="2" raycount="4" stepcount="6" thickness="1" intensity="1" gidenoiseoffset="3" rraycount="256" rdenoiseoffset="3" />
+    <ssao active="true" />
+  </visual>
+  <asset>
+    <material name="yellow" rgba="0.9068561 0.8431176 0.0452435 1.0" reflectance="0.5" roughness="0.5" metallic="0.0" />
+    <material name="black" rgba="0 0 0 1" reflectance="0.5" roughness="0.5" metallic="0.0" />
+    <material name="blue" rgba="0 0.1682536 0.9063871 1" reflectance="0.5" roughness="0.5" metallic="0.0" />
+    <texture type="skybox" builtin="gradient" rgb1="0.0 0.0 0.0" rgb2="0.0 0.0 0.0" width="256" height="1024" />
+  </asset>
   <worldbody>
-
-    <light name="light" pos="0 0 3"/>
-    <camera name="fixed" pos="0 -3 3" xyaxes="1 0 0 0 1 1"/>
-    <geom name="floor" type="plane" size="5 5 0.1" pos="0 0 0" rgba="0.4 0.4 0.4 1" material="motphys-ground"/>
-
-    <body name="base" pos="0 0 0.5">
-      <body name="arm_A" pos="0 0 0"> 
-        <joint name="joint_A" type="hinge" axis="0 0 1" limited="true" range = "-90 90"/>
-        <geom name="cube_A" type="box" size="0.2 0.2 0.5" pos="0 0 0" rgba="1 0 0 1"/>
-        
-        <body name="arm_B" pos="0 0 0.65">  
-          <joint name="joint_B" type="hinge" axis="0 1 0" limited="true" range = "-30 30"/> 
-          <geom name="sphere" type="sphere" size="0.15" pos="0 0 0" rgba="0 0 1 1"/>
-
-          <body name="arm_C" pos="0 0 0">  
-            <joint name="joint_C" type="hinge" axis="0 1 0" limited="true" range = "-10 10"/> 
-            <geom name="cube_C" type="box" size="0.15 0.15 0.4" pos="0 0 0.4" rgba="1 1 0 1"/>
+    <camera name="fixed" pos="0 -6 6" quat="0.9238796 0.3826834 0.0 0.0" fovy="26.9914664" mode="fixed" />
+    <light name="LIT_Key" pos="0.0 -2.0 8.0" dir="-0.0 0.2425356 -0.9701424" type="spot" diffuse="1.0 0.744 0.536" intensity="203025.0000782" range="40.0" cutoff="80" innerangle="15" attenuation="0.0 0.5 0.01" bulbradius="10" castshadow="true" mode="fixed"/>
+    <light name="LIT_Fill_1" pos="0.0 -2.0 8.0" dir="-0.0 0.2425356 -0.9701424" type="spot" diffuse="1.0 0.744 0.536" intensity="150300.0162372" range="25" cutoff="32" innerangle="27" castshadow="false" mode="fixed" attenuation="0.0 0.5 0.01" bulbradius="1"/>
+    <light name="LIT_Fill_2" pos="1.0 -1.0 6.0" dir="-0.1794892 0.1794892 -0.9672472" type="spot" diffuse="0.52 0.66 1.0" intensity="100440.0012809" range="40.0" cutoff="40" innerangle="8.0000017" attenuation="0.0 0.5 0.01" bulbradius="1" castshadow="false" mode="fixed"/>
+    <body name="base" pos="0 0 1" quat="1.0 0.0 0.0 0.0">
+      <body name="arm_A" pos="0 0 0" quat="1.0 0.0 0.0 0.0">
+        <joint name="joint_A" pos="0 0 0" axis="0.0 0.0 1.0" type="hinge" range="-90.0000025 90.0000025" limited="true" />
+        <geom name="GEO_Cylinder_001" pos="-0 -0 -0" quat="1.0 0.0 0.0 0.0" type="cylinder" size="0.3383628 1" material="yellow" group="2" contype="0" conaffinity="0" density="125" />
+        <body name="arm_B" pos="0 0 1.3000052" quat="1.0 0.0 0.0 0.0">
+          <joint name="joint_B" pos="0 0 0" axis="0.0 1.0 1e-07" type="hinge" range="-30.0000008 30.0000008" limited="true" />
+          <geom name="GEO_Sphere" pos="0 0 -5.2e-06" quat="1.0 0.0 0.0 0.0" type="sphere" size="0.3" material="blue" group="2" contype="0" conaffinity="0" density="125" />
+          <body name="arm_C" pos="0 0 0" quat="1.0 0.0 0.0 0.0">
+            <joint name="joint_C" pos="0 0 0" axis="0.0 1.0 1e-07" type="hinge" range="-9.9999997 9.9999997" limited="true" />
+            <geom name="GEO_Cube_001" pos="1.1832268 0.0199996 1.5354378" quat="0.9758289 0.0 0.2185356 0.0" type="box" size="0.05 0.05 0.1" material="yellow" group="2" contype="0" conaffinity="0" density="125" />
+            <geom name="GEO_Cube_002" pos="-1.183227 0.0199996 1.5354382" quat="0.5971823 0.3786466 0.3786466 0.5971824" type="box" size="0.05 0.1 0.0500002" material="yellow" group="2" contype="0" conaffinity="0" density="125" />
+            <geom name="GEO_Cube_003" pos="-0.8699406 -4e-07 1.2938716" quat="0.5609856 0.4304592 -0.4304593 -0.5609856" type="box" size="0.1078548 0.107855 0.6" material="yellow" group="2" contype="0" conaffinity="0" density="125" />
+            <geom name="GEO_Cube_004" pos="0.8699406 -4e-07 1.2938716" quat="0.4304592 0.5609855 -0.5609856 -0.4304594" type="box" size="0.1078548 0.1078548 0.6" material="yellow" group="2" contype="0" conaffinity="0" density="125" />
+            <geom name="GEO_Cube_005" pos="0 -0.3010364 1.777879" quat="1.0 0.0 0.0 0.0" type="box" size="0.055 0.042 0.055" material="black" group="2" contype="0" conaffinity="0" density="125" />
+            <geom name="GEO_Cylinder_002" pos="-0 0 1.2999948" quat="1.0 0.0 0.0 0.0" type="cylinder" size="0.3383628 1" material="yellow" group="2" contype="0" conaffinity="0" density="125" />
+            <geom name="GEO_Cylinder_003" pos="0.1573872 -0.2368192 2.0345008" type="sphere" size="0.1" material="black" group="2" contype="0" conaffinity="0" density="125" />
+            <geom name="GEO_Cylinder_004" pos="-0.1573872 -0.2368192 2.0345008" type="sphere" size="0.1" material="black" group="2" contype="0" conaffinity="0" density="125" />
           </body>
         </body>
       </body>
     </body>
   </worldbody>
-
   <actuator>
-    <motor name="actuator_A" joint="joint_A" gear="100"/>
-    <motor name="actuator_B" joint="joint_B" gear="100"/>
-    <motor name="actuator_C" joint="joint_C" gear="1000" ctrlrange = "-0.5 0.5"/>
+    <motor name="actuator_A" joint="joint_A" gear="100.0 0.0 0.0 0.0 0.0 0.0" />
+    <motor name="actuator_B" joint="joint_B" gear="100.0 0.0 0.0 0.0 0.0 0.0" />
+    <motor name="actuator_C" joint="joint_C" ctrlrange="-0.5 0.5" gear="1000.0 0.0 0.0 0.0 0.0 0.0" />
   </actuator>
 </mujoco>

@@ -17,7 +17,7 @@ import sys
 import time
 
 from motrixsim import run
-from motrixsim.render import RenderApp
+from motrixsim.render import RenderApp, RenderSettings
 
 USE_GPU = "--gpu" in sys.argv
 if USE_GPU:
@@ -37,8 +37,10 @@ def main():
         path = "examples/assets/actuator.xml"
         # Load the scene model
         model = load_model(path)
-        # Create the render instance of the model
-        render.launch(model)
+        # Create the render instance of the model with high-quality GI enabled.
+        render_settings = RenderSettings.quality()
+        render_settings.enable_ssgi = True
+        render.launch(model, render_settings=render_settings)
         # Create the physics data of the model
         data = SceneData(model)
 
